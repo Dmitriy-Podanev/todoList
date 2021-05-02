@@ -9,12 +9,16 @@ export async function init() {
     openRequest.onupgradeneeded = function() {
         // срабатывает, если на клиенте нет базы данных
         // ...выполнить инициализацию...
-         db = openRequest.result
-        db.createObjectStore('items',{keyPath:'id'})
-        db.createObjectStore('category',{keyPath:'id'})
+         db =  openRequest.result
+        db.createObjectStore('items',{autoIncrement:true})
+        db.createObjectStore('category',{autoIncrement:true})
     };
+    openRequest.onsuccess =function () {
+
+    }
     // db.createObjectStore('items',{keyPath:'id'})
     // db.createObjectStore('category',{keyPath:'id'})
+
 }
 
 export async function addItem(obj:object) {
@@ -32,8 +36,15 @@ export async function addItem(obj:object) {
     }
 }
 export async function getAllItems() {
-    let tx = db.transaction('items');
-    let bookStore = tx.objectStore('items');
+    openRequest  = await indexedDB.open("TaskDB",1)
+    let res
+    openRequest.onsuccess =function () {
+        db =  openRequest.result
+        let tx = db.transaction('items');
+        let bookStore = tx.objectStore('items');
+        res =  bookStore.getAll()
+    }
 
-    return await bookStore.getAll();
+
+    return res
 }
