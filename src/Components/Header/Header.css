@@ -1,0 +1,12 @@
+.Header{
+    display: flex;
+    text-align: center;
+    
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: aqua;
+    color: black;
+}
+.Header .Header-toggle{
+    display: flex;
+}
