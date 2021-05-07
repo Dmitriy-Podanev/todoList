@@ -3,9 +3,13 @@ import * as Yup from 'yup'
 import "./ModalForm.css"
 import {AppState} from "../../Store/app/Types";
 import {Field, useFormik} from "formik";
-import {log} from "util";
+
 import {block} from "bem-cn";
-import { addItem } from "../../indexedDB";
+import {DatabaseManager} from "../../DataBaseManager";
+import {useDispatch} from "react-redux";
+import {appAddTask, appEditTask} from "../../Store/app/action";
+import {useDatabase} from "../../hooks/useDatabase";
+
 
 interface Props {
     active: boolean
@@ -13,6 +17,8 @@ interface Props {
     setActive: () => void
 }
 
+
+//let myDB = new DatabaseManager("NewDB",["items"])
 const b = block("modal")
 const schema: Yup.SchemaOf<AppState.itemTypesForm> = Yup.object().shape(({
     Name: Yup.string().required('Поле Name обязательно'),
@@ -20,11 +26,12 @@ const schema: Yup.SchemaOf<AppState.itemTypesForm> = Yup.object().shape(({
 }))
 
 export const Modal: React.FC<Props> = ({active, setActive, data}) => {
-
+    const dispatch  = useDispatch();
+    const database = useDatabase()
     const {handleBlur, touched, errors, values, submitForm, handleChange} = useFormik<AppState.itemState>({
         initialValues: {
 
-            id: data?.id ?? "",
+            id: data?.id ?? Math.random(), //todo  надо ли передавать в DB?
             Name: data?.Name ?? "",
             CategoryId: data?.CategoryId ?? "",
             Description: data?.Description ?? ""
@@ -34,10 +41,20 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
 
         validationSchema: schema,
         onSubmit: async (fields) => {
-
+            let da = {...fields}
             try {
+                database.createObject("items",fields)
+                // dispatch(appAddTask(fields))
+                // if(data){
+                //     dispatch(appEditTask(fields))
+                // }
+                // else{
+                //     dispatch(appAddTask(fields))
+                //
+                // }
+                //myDB.createObject('items',fields)
 
-                await addItem(fields)
+               // await addItem(fields)
             } catch (e) {
                 alert("Ошибка") //todo dispatch(ERROR)
             }

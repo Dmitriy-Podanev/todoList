@@ -2,15 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdca8974-e89d-41cb-8c46-ffe75d71c5c2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Components/ModalForm/ModalForm.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/ModalForm/modalForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Content/Content.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DataBaseManager.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Store/app/Store/StoreProvider.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Store/app/action.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Store/app/itemsAPI/apiImportTask.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useDatabase.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ModalForm/modalForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ModalForm/modalForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Store/app/ItemsReduces.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store/app/ItemsReduces.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Store/app/Types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store/app/Types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/indexedDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/indexedDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Store/app/appActionEnum.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store/app/appActionEnum.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Store/app/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store/app/Store/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Store/rootReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Store/rootReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/indexedDB.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +28,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
-        <option value="TypeScript File" />
         <option value="CSS File" />
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -50,6 +58,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\79205\Desktop\todo\src\Store\app\Store" />
       <recent name="C:\Users\79205\Desktop\todo\src\Components\ModalForm" />
       <recent name="C:\Users\79205\Desktop\todo\src\Store" />
       <recent name="C:\Users\79205\Desktop\todo\src\Components" />
@@ -83,7 +92,12 @@
       <workItem from="1619872068784" duration="1182000" />
       <workItem from="1619946938224" duration="6406000" />
       <workItem from="1619954885807" duration="5092000" />
-      <workItem from="1619962357112" duration="9469000" />
+      <workItem from="1619962357112" duration="9522000" />
+      <workItem from="1620034005827" duration="19721000" />
+      <workItem from="1620120426429" duration="19206000" />
+      <workItem from="1620203018612" duration="4351000" />
+      <workItem from="1620316556562" duration="15563000" />
+      <workItem from="1620388994134" duration="925000" />
     </task>
     <servers />
   </component>
@@ -95,37 +109,41 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="574" y="133" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1619963700402" />
-    <state x="499" y="163" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1619872297744">
+    <state x="499" y="163" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1620325500234">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="499" y="163" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.834@0.0.1536.834" timestamp="1619872297744" />
-    <state width="1493" height="192" key="GridCell.Tab.0.bottom" timestamp="1619973207092">
+    <state x="499" y="163" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.834@0.0.1536.834" timestamp="1620325500234" />
+    <state width="1493" height="192" key="GridCell.Tab.0.bottom" timestamp="1620390322137">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1619973207092" />
-    <state width="1493" height="192" key="GridCell.Tab.0.center" timestamp="1619973207092">
+    <state width="1493" height="192" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1620390322137" />
+    <state width="1493" height="192" key="GridCell.Tab.0.center" timestamp="1620390322137">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1619973207092" />
-    <state width="1493" height="192" key="GridCell.Tab.0.left" timestamp="1619973207092">
+    <state width="1493" height="192" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1620390322137" />
+    <state width="1493" height="192" key="GridCell.Tab.0.left" timestamp="1620390322136">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1619973207092" />
-    <state width="1493" height="192" key="GridCell.Tab.0.right" timestamp="1619973207092">
+    <state width="1493" height="192" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1620390322136" />
+    <state width="1493" height="192" key="GridCell.Tab.0.right" timestamp="1620390322137">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="192" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1619973207092" />
-    <state x="440" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1619962357757">
+    <state width="1493" height="192" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1620390322137" />
+    <state x="440" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1620389113642">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="440" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1619962357757" />
-    <state x="425" y="189" key="run.anything.popup" timestamp="1619965964962">
+    <state x="440" y="241" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1620389113642" />
+    <state x="493" y="35" key="refactoring.ChangeSignatureDialog" timestamp="1620328952869">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="425" y="189" key="run.anything.popup/0.0.1536.834@0.0.1536.834" timestamp="1619965964962" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1619960798546">
+    <state x="493" y="35" key="refactoring.ChangeSignatureDialog/0.0.1536.834@0.0.1536.834" timestamp="1620328952869" />
+    <state x="425" y="189" key="run.anything.popup" timestamp="1620328420609">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1619960798546" />
+    <state x="425" y="189" key="run.anything.popup/0.0.1536.834@0.0.1536.834" timestamp="1620328420609" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1620328029973">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1620328029973" />
   </component>
 </project>

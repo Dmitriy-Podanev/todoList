@@ -1,29 +1,43 @@
 import {Action as ActionRedux} from 'redux'
+import {appActionEnum} from "./appActionEnum";
 
 
+export declare namespace AppState {
+    interface State {
+        error: string,
+        loading: boolean,
+        taskM?:itemState[],
+        //categoryM: categoryState[],
+        selectMode: string
 
-export declare namespace AppState{
-    interface State{
-        error:string,
-        loading:boolean
     }
+
     interface itemState {
-        id:string
-        Name:string
+        id: number
+        Name: string
         Description?: string
-        CategoryId?:string
+        CategoryId?: string
 
     }
-    interface itemTypesForm{
-        Name:string
+    interface categoryState{
+        id:string,
+        Name: string,
+        Description: string
+    }
+
+    interface itemTypesForm {
+        Name: string
         Description?: string
 
     }
 
-    namespace ItemsAction{
-        type getAllItems = ActionRedux<AppState.ItemsAction.getAllItems> & {payload:object[]}
+    namespace ItemsAction {
+        type importTasks = ActionRedux<appActionEnum.IMPORT_TASKS> & { payload: itemState[] }
+        type addTask = ActionRedux<appActionEnum.ADD_TASK> & { payload: itemState }
+        type editTask = ActionRedux<appActionEnum.EDIT_TASK> & { payload: object  }
+        type deleteTask = ActionRedux<appActionEnum.DELETE_TASK> & { payload: string }
         //todo описать все типы
 
-        type All = getAllItems
+        type All = importTasks | addTask | editTask | deleteTask
     }
 }
