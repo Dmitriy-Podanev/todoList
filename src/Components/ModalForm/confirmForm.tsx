@@ -4,6 +4,8 @@ import {useDatabase} from "../../hooks/useDatabase";
 import {DatabaseManagerEventName} from "../../DataBaseManager";
 import {block} from "bem-cn";
 import "./ModalForm.css"
+import {useSelector} from "react-redux";
+import {RootStore} from "../../Store/app/Store/store";
 
 
 interface Props {
@@ -15,10 +17,11 @@ interface Props {
 const b = block("modal")
 export const Confirm: React.FC<Props> = ({setActive, active, data}) => {
     const database = useDatabase()
+    const globalState = useSelector((state:RootStore) =>state.global )
 
     const deleteTask = (id: any) => {
 
-        database.deleteObject('items', id)
+        database.deleteObject(globalState.selectMode, id)
         setActive()
         window.dispatchEvent(new CustomEvent(DatabaseManagerEventName));
     }
@@ -35,5 +38,5 @@ export const Confirm: React.FC<Props> = ({setActive, active, data}) => {
                 <button onClick={() => cancel()}>Отменить</button>
             </div>
 
-        </div>) : (null))
+        </div>) : null)
 }

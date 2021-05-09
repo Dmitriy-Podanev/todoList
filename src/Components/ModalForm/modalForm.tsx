@@ -6,9 +6,10 @@ import {Field, useFormik} from "formik";
 
 import {block} from "bem-cn";
 import {DatabaseManager} from "../../DataBaseManager";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 //import {appAddTask, appEditTask} from "../../Store/app/action";
 import {useDatabase} from "../../hooks/useDatabase";
+import {RootStore} from "../../Store/app/Store/store";
 
 
 interface Props {
@@ -27,7 +28,7 @@ const schema: Yup.SchemaOf<AppState.itemTypesForm> = Yup.object().shape(({
 
 export const Modal: React.FC<Props> = ({active, setActive, data}) => {
 
-
+    const globalState = useSelector((state:RootStore) =>state.global )
     const database = useDatabase()
 
     const {handleBlur, touched, errors, values, submitForm, handleChange, setValues, setFieldValue, handleReset,} = useFormik<AppState.itemState>({
@@ -48,9 +49,9 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
 
 
                 if (data !== null) {
-                    database.editObject("items", fields)
+                    database.editObject(globalState.selectMode, fields)
                 } else {
-                    database.createObject("items", fields)
+                    database.createObject(globalState.selectMode, fields)
                 }
 
             } catch (e) {

@@ -10,7 +10,7 @@ interface Props {
 
 const b = block("Content")
 export const Content: React.FC<Props> = () => {
-    const taskState: AppState.State = useSelector((state: RootStore) => state.task)
+
 
 
     return (<div></div>)

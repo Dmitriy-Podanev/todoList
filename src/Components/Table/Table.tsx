@@ -16,6 +16,7 @@ import {DatabaseManagerEventName} from "../../DataBaseManager";
 import {Confirm} from "../ModalForm/confirmForm";
 import {appImportTask, itemsSlice} from "../../Store/app/Slices/itemsSlice";
 import { block } from "bem-cn";
+import { appImportCategory } from "../../Store/app/Slices/categoriesSlice";
 //import {appImportTask} from "../../Store/app/action";
 
 
@@ -26,7 +27,10 @@ const b = block("Table")
 export const Table: React.FC<Props> = () => {
 
 
-    const taskState: AppState.State = useSelector((state: RootStore) => state.task)
+    const taskState: any = useSelector((state: RootStore) => state.task)
+    const categoryState: any = useSelector((state:RootStore) => state.category )
+    const globalState: AppState.globalState = useSelector((state:RootStore) => state.global )
+
     const [modalMod, setModalMod] = useState(false)
     const [confMod, setConfMod] = useState(false)
     const [confData, setConfData] = useState<AppState.itemState | null>(null)
@@ -54,7 +58,8 @@ export const Table: React.FC<Props> = () => {
 
     const databaseLoader = () => {
        // database.getAllObjects<(result: AppState.itemState[]) => AppState.ItemsAction.All>('items', tasks => dispatch(appImportTasks(tasks)))
-        database.getAllObjects<(result: AppState.itemState[]) => any>('items',res=>dispatch(appImportTask(res)))
+        database.getAllObjects<(result: AppState.itemState[]) => any>('tasks',res=>dispatch(appImportTask(res)))
+        database.getAllObjects<(result: AppState.categoryState[]) => any>('category',res=>dispatch(appImportCategory(res)))
 
 
     }
@@ -70,9 +75,25 @@ export const Table: React.FC<Props> = () => {
             {/*<button type="submit" onClick={() => change(null)}>Запустить окно</button>*/}
             <Modal active={modalMod} setActive={toggleModal} data={data}/>
             <Confirm active={confMod} setActive={toggleConf} data={confData}/>
-            {taskState.selectMode === "tasks" ? (<div>TASKS</div>):(<div>CATEGORY</div>)}
-            {<table className={b(taskState.selectMode)}>
-                {(taskState.taskM ? ([123,2]) :([123,3])).}
+            {globalState.selectMode === "tasks" ? (<div>TASKS</div>):(<div>CATEGORY</div>)}
+            {<table className={b(globalState.selectMode)}>
+                {(globalState.selectMode ==="tasks" ? (taskState.data) :(categoryState.data)).map((item: any) =>{
+                    return (
+
+                        <tr key={item.id}>
+                            <td>{item.Name ?? ""}</td>
+                            <td>{item.Description ?? ""}</td>
+                            <td>{item.CategoryId ?? ""}</td>
+                            <td>
+                                <button onClick={() => change(item)}>Edit</button>
+                            </td>
+                            <td>
+                                <button onClick={() => confirmDelete(item)}>Delete
+                                </button>
+                            </td>
+                        </tr>
+                    )
+                })}
                 {/*<thead>*/}
                 {/*<tr>*/}
 
@@ -85,27 +106,27 @@ export const Table: React.FC<Props> = () => {
                 <tbody>
 
 
-                {
+                {/*{*/}
 
-                    taskState.taskM.map((itemKey: any) => {
+                {/*    taskState.map((itemKey: any) => {*/}
 
-                        return (
+                {/*        return (*/}
 
-                            <tr key={itemKey.id}>
-                                <td>{itemKey.Name ?? ""}</td>
-                                <td>{itemKey.Description ?? ""}</td>
-                                <td>{itemKey.CategoryId ?? ""}</td>
-                                <td>
-                                    <button onClick={() => change(itemKey)}>Edit</button>
-                                </td>
-                                <td>
-                                    <button onClick={() => confirmDelete(itemKey)}>Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
+                {/*            <tr key={itemKey.id}>*/}
+                {/*                <td>{itemKey.Name ?? ""}</td>*/}
+                {/*                <td>{itemKey.Description ?? ""}</td>*/}
+                {/*                <td>{itemKey.CategoryId ?? ""}</td>*/}
+                {/*                <td>*/}
+                {/*                    <button onClick={() => change(itemKey)}>Edit</button>*/}
+                {/*                </td>*/}
+                {/*                <td>*/}
+                {/*                    <button onClick={() => confirmDelete(itemKey)}>Delete*/}
+                {/*                    </button>*/}
+                {/*                </td>*/}
+                {/*            </tr>*/}
+                {/*        )*/}
+                {/*    })*/}
+                {/*}*/}
                 </tbody>
 
             </table>}

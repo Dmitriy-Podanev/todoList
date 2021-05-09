@@ -3,13 +3,26 @@ import {appActionEnum} from "./appActionEnum";
 
 
 export declare namespace AppState {
+    // interface State {
+    //     error: string,
+    //     loading: boolean,
+    //     taskM:itemState[],
+    //     //categoryM: categoryState[],
+    //     selectMode: string
+    //
+    // }
     interface State {
         error: string,
         loading: boolean,
-        taskM:itemState[],
+        //taskM:itemState[],
         //categoryM: categoryState[],
         selectMode: string
 
+    }
+    interface globalState{
+        loading: false,
+        error: string,
+        selectMode: string
     }
 
     interface itemState {
@@ -20,7 +33,7 @@ export declare namespace AppState {
 
     }
     interface categoryState{
-        id:string,
+        id:number,
         Name: string,
         Description: string
     }
