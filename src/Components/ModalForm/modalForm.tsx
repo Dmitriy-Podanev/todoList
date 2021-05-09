@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import * as Yup from 'yup'
 import "./ModalForm.css"
 import {AppState} from "../../Store/app/Types";
@@ -7,7 +7,7 @@ import {Field, useFormik} from "formik";
 import {block} from "bem-cn";
 import {DatabaseManager} from "../../DataBaseManager";
 import {useDispatch} from "react-redux";
-import {appAddTask, appEditTask} from "../../Store/app/action";
+//import {appAddTask, appEditTask} from "../../Store/app/action";
 import {useDatabase} from "../../hooks/useDatabase";
 
 
@@ -26,58 +26,74 @@ const schema: Yup.SchemaOf<AppState.itemTypesForm> = Yup.object().shape(({
 }))
 
 export const Modal: React.FC<Props> = ({active, setActive, data}) => {
-    const dispatch  = useDispatch();
+
+
     const database = useDatabase()
-    const {handleBlur, touched, errors, values, submitForm, handleChange} = useFormik<AppState.itemState>({
+
+    const {handleBlur, touched, errors, values, submitForm, handleChange, setValues, setFieldValue, handleReset,} = useFormik<AppState.itemState>({
         initialValues: {
 
-            id: data?.id ?? Math.random(), //todo  надо ли передавать в DB?
-            Name: data?.Name ?? "",
-            CategoryId: data?.CategoryId ?? "",
-            Description: data?.Description ?? ""
 
+            id: data?.id ?? Math.random(),
+            Name: data?.Name ?? "",
+            CategoryId: data?.CategoryId,
+            Description: "Описание Задачи может быть длинным"
 
         },
 
         validationSchema: schema,
         onSubmit: async (fields) => {
-            let da = {...fields}
-            try {
-                database.createObject("items",fields)
-                // dispatch(appAddTask(fields))
-                // if(data){
-                //     dispatch(appEditTask(fields))
-                // }
-                // else{
-                //     dispatch(appAddTask(fields))
-                //
-                // }
-                //myDB.createObject('items',fields)
 
-               // await addItem(fields)
+            try {
+
+
+                if (data !== null) {
+                    database.editObject("items", fields)
+                } else {
+                    database.createObject("items", fields)
+                }
+
             } catch (e) {
                 alert("Ошибка") //todo dispatch(ERROR)
             }
         }
     })
 
+    useEffect(() => {
+        if (data !== null) {
+            setValues(data)
+        }
+
+    }, [data])
+
+    function close(e: any) {
+        handleReset(e)
+        setActive()
+    }
+
 
     return (active ? (<form className={b()} onSubmit={submitForm}>
-                <input type="text" name={"Name"} value={values.Name} onChange={handleChange} onBlur={handleBlur} min={1}
-                       autoFocus/>
-                {errors.Name && touched.Name ? (
-                    <div>{errors.Name}</div>
-                ) : null}
-                <input type="text" name={"Description"} value={values.Description} onChange={handleChange}
-                       onBlur={handleBlur}/>
-                {errors.Description && touched.Description ? (
-                    <div>{errors.Description}</div>
-                ) : null}
+                <div className={b('content')}>
+                    <input type="text" name={"Name"} value={values.Name} onChange={handleChange}
+                           onBlur={handleBlur} min={1} max={255}
+                           autoFocus/>
+                    {errors.Name && touched.Name ? (
+                        <div>{errors.Name}</div>
+                    ) : null}
+                    <input type="text" name={"Description"} value={values.Description}
+                           onChange={handleChange} max={512}
+
+                           onBlur={handleBlur}/>
+                    {errors.Description && touched.Description ? (
+                        <div>{errors.Description}</div>
+                    ) : null}
 
 
-                {values.Name ==="" ? <button disabled> Сохранить</button> :
-                    <button type="submit">Сохранить</button>}
+                    {values.Name === "" ? <button disabled> Сохранить</button> :
+                        <button type="submit">Сохранить</button>}
+                    <button onClick={(e) => close(e)}>Закрыть</button>
 
+                </div>
             </form>)
             :
             null

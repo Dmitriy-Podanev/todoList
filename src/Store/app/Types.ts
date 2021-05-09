@@ -6,7 +6,7 @@ export declare namespace AppState {
     interface State {
         error: string,
         loading: boolean,
-        taskM?:itemState[],
+        taskM:itemState[],
         //categoryM: categoryState[],
         selectMode: string
 

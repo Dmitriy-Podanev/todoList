@@ -8,7 +8,7 @@ export const StoreContext  = React.createContext<DatabaseManager | null> (null)
 StoreContext.displayName = "RootStore"
 
 export const StoreProvider: React.FC = ({children})=>(
-    <StoreContext.Provider value = {new DatabaseManager('QPD-db',["items","categorys"])}>
+    <StoreContext.Provider value = {new DatabaseManager('QPD-db',["items","category"])}>
         {children}
     </StoreContext.Provider>
 )
