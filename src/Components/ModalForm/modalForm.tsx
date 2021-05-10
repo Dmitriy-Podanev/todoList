@@ -28,7 +28,8 @@ const schema: Yup.SchemaOf<AppState.itemTypesForm> = Yup.object().shape(({
 
 export const Modal: React.FC<Props> = ({active, setActive, data}) => {
 
-    const globalState = useSelector((state:RootStore) =>state.global )
+    const globalState = useSelector((state: RootStore) => state.global)
+    const categoryState = useSelector((state: RootStore) => state.category)
     const database = useDatabase()
 
     const {handleBlur, touched, errors, values, submitForm, handleChange, setValues, setFieldValue, handleReset,} = useFormik<AppState.itemState>({
@@ -80,6 +81,19 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
                            autoFocus/>
                     {errors.Name && touched.Name ? (
                         <div>{errors.Name}</div>
+                    ) : null}
+                    {globalState.selectMode !== "category" ? (
+                        <select name={"CategoryId"} value={values.CategoryId} onChange={handleChange}>
+                            <option value={values.CategoryId}>{values.CategoryId}</option>
+                            {categoryState.data.map((item: AppState.categoryState) => {
+                                return (<option value={item.id}>{item.Name}</option>)
+                            })}
+
+                            {/*<option value="grapefruit">Грейпфрут</option>*/}
+                            {/*<option value="lime">Лайм</option>*/}
+                            {/*<option value="coconut">Кокос</option>*/}
+                            {/*<option value="mango">Манго</option>*/}
+                        </select>
                     ) : null}
                     <input type="text" name={"Description"} value={values.Description}
                            onChange={handleChange} max={512}
