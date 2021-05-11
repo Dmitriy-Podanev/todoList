@@ -29,7 +29,7 @@ export declare namespace AppState {
         id: number
         Name: string
         Description?: string
-        CategoryId?: string
+        CategoryId?: number 
 
     }
     interface categoryState{

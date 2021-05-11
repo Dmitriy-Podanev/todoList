@@ -7,6 +7,12 @@ import {AppState} from "../../Store/app/Types";
 import {Modal} from "../ModalForm/modalForm";
 import { changeMod } from '../../Store/app/Slices/globalSlice';
 import { RootStore } from '../../Store/app/Store/store';
+import { StringDecoder } from 'node:string_decoder';
+import { Mode } from '../Content/SwitchContentMode';
+
+
+
+
 
 interface Props {
 
@@ -17,9 +23,15 @@ export const Header: React.FC<Props> = ()=>{
     const globalState = useSelector((state:RootStore) => state.global)
 
     const [modalMod, setModalMod] = useState(false)
+ 
 
     const toggleModal = () => setModalMod(!modalMod)
 
+
+
+    
+
+    
 
     return(
         <div className={b()}>
@@ -30,7 +42,8 @@ export const Header: React.FC<Props> = ()=>{
                <p><a onClick={()=>{dispatch(changeMod("category"))}}>Категории</a></p>
             </div>
             <div className={b("addButton") }>
-                <p><a onClick={()=>{toggleModal()}}>Добавить {globalState.selectMode}</a></p>
+                {/* <p><a onClick={()=>{toggleModal()}}>Добавить {globalState.selectMode}</a></p> */}
+                <p><a onClick={()=>{toggleModal()}}>Добавить {Mode()}</a></p>
             </div>
             <Modal active={modalMod} setActive={toggleModal} data={null}/>
         </div>)

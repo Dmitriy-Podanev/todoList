@@ -23,7 +23,7 @@ export const itemsSlice = createSlice({
             state.data = action.payload
         }),
 
-
+        
 
     }
 

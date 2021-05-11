@@ -36,16 +36,16 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
         initialValues: {
 
 
-            id: data?.id ?? Math.random(),
+            id: data?.id ?? Math.random(), //nanoid (string )
             Name: data?.Name ?? "",
             CategoryId: data?.CategoryId,
-            Description: "Описание Задачи может быть длинным"
+            Description: "Описание может быть длинным"
 
         },
 
         validationSchema: schema,
-        onSubmit: async (fields) => {
-
+        onSubmit: async (fields,e) => {
+                e.setSubmitting(false)
             try {
 
 
@@ -56,7 +56,7 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
                 }
 
             } catch (e) {
-                alert("Ошибка") //todo dispatch(ERROR)
+                alert("Ошибка создания обьекта") //todo dispatch(ERROR)
             }
         }
     })
@@ -72,8 +72,8 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
         handleReset(e)
         setActive()
     }
-
-
+//value={values.CategoryId}
+//TODO: убрать из select баг с показам id категории 
     return (active ? (<form className={b()} onSubmit={submitForm}>
                 <div className={b('content')}>
                     <input type="text" name={"Name"} value={values.Name} onChange={handleChange}
@@ -83,7 +83,7 @@ export const Modal: React.FC<Props> = ({active, setActive, data}) => {
                         <div>{errors.Name}</div>
                     ) : null}
                     {globalState.selectMode !== "category" ? (
-                        <select name={"CategoryId"} value={values.CategoryId} onChange={handleChange}>
+                        <select name={"CategoryId"}  onChange={handleChange}>
                             <option value={values.CategoryId}>{values.CategoryId}</option>
                             {categoryState.data.map((item: AppState.categoryState) => {
                                 return (<option value={item.id}>{item.Name}</option>)

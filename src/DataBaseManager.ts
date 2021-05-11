@@ -28,11 +28,17 @@ export class DatabaseManager {
 
     public constructor(private readonly databaseName: string, databaseStores?: string[]) {
         this.initDB(databaseStores);
+        //перенести просто init 
     }
 
     public closeDatabase(): void {
         this.database.close();
     }
+
+
+    //TODO: создать отдельные классы, где конструктор будет создавтаь хранилище для сервиса. Создать методы управления этими хранилищами
+
+
 
     public createObject<T extends GenericObject>(storeName: string, databaseElement: T): void {
         const transaction = this.database.transaction(storeName, this.READ_WRITE_MODE);
@@ -53,6 +59,11 @@ export class DatabaseManager {
             if (getRequest.result !== undefined) {
                 callback(getRequest.result);
             }
+            // if(getRequest.result!==undefined)
+            // {
+            // return getRequest.result
+
+            // }
         };
     }
 
@@ -70,7 +81,31 @@ export class DatabaseManager {
         const store = transaction.objectStore(storeName);
         const addRequest = store.delete(id);
 
+        let tr = this.database.transaction('tasks',this.READ_MODE)
+        let st  = tr.objectStore('tasks')
+        st.openCursor().onsuccess = (event:any)=>{
+
+            let cursor  = event.target.result
+            if(cursor){
+            console.log(cursor.value.CategoryId);
+            
+            if(id == cursor.value.CategoryId){
+               this.editObject('tasks',{...cursor.value,CategoryId:undefined})
+                
+            }
+            //console.log(cursor);
+            cursor.continue();
+            
+        }
+      
+        };
+
+       
+
+
         addRequest.onerror = () => this.errorHandler(storeName, this.DELETE_OBJECT);
+        window.dispatchEvent(new CustomEvent(DatabaseManagerEventName));
+
     }
 
     public editObject<T extends GenericObject>(storeName: string, databaseElement: T): void {
@@ -121,3 +156,5 @@ export class DatabaseManager {
         });
     }
 }
+
+
