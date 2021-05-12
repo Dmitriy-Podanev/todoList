@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 //import {appAddTask, appEditTask} from "../../Store/app/action";
 import { useDatabase } from "../../hooks/useDatabase";
 import { RootStore } from "../../Store/app/Store/store";
+import { nanoid } from "@reduxjs/toolkit";
 
 interface Props {
   active: boolean;
@@ -20,7 +21,7 @@ interface Props {
   setActive: () => void;
 }
 
-//TODO: соделать nanoid
+
 //let myDB = new DatabaseManager("NewDB",["items"])
 const b = block("modal");
 const schema: Yup.SchemaOf<AppState.itemTypesForm> = Yup.object().shape({
@@ -49,7 +50,7 @@ export const ModalTask: React.FC<Props> = ({ active, setActive, data }) => {
     resetForm,
   } = useFormik<AppState.itemState>({
     initialValues: {
-      id: data?.id ?? Math.random(), //nanoid (string )
+      id: data?.id ?? nanoid(), //nanoid (string )
       Name: data?.Name ?? "",
       CategoryId: data?.CategoryId,
       Description: "",
@@ -70,7 +71,7 @@ export const ModalTask: React.FC<Props> = ({ active, setActive, data }) => {
         window.dispatchEvent(new CustomEvent(DatabaseManagerEventName));
         resetForm({
           values: {
-            id: data?.id ?? Math.random(), //nanoid (string )
+            id: data?.id ?? nanoid(), //nanoid (string )
             Name: data?.Name ?? "",
             CategoryId: data?.CategoryId,
             Description: "",
@@ -96,6 +97,8 @@ export const ModalTask: React.FC<Props> = ({ active, setActive, data }) => {
 
   return active ? (
     <form
+        // onKeyDown={(e)=>{if(e.code ==="Tab"){e.preventDefault()}}
+        // }
       className={b()}
       onSubmit={(e) => {
         e.preventDefault();

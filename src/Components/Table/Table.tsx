@@ -65,6 +65,8 @@ export const Table: React.FC<Props> = () => {
   }, []);
   //TODO:убрать локальный поиск имени категории по id из stor-а
 
+  //TODO: StopPropagation
+
   return (
     <div>
       {globalState.selectMode == "tasks" ? (

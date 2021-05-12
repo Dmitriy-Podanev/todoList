@@ -99,21 +99,25 @@ export class DatabaseManager {
     const store = transaction.objectStore(storeName);
     const addRequest = store.delete(id);
 
-    let tr = this.database.transaction("tasks", this.READ_MODE);
-    let st = tr.objectStore("tasks");
-    st.openCursor().onsuccess = (event: any) => {
-      let cursor = event.target.result;
-      if (cursor) {
-        console.log(cursor.value.CategoryId);
+    if (storeName !== "tasks") {
+      let tr = this.database.transaction("tasks", this.READ_MODE);
+      let st = tr.objectStore("tasks");
+      st.openCursor().onsuccess = (event: any) => {
+        let cursor = event.target.result;
+        if (cursor) {
+          console.log(cursor.value.CategoryId);
 
-        if (id == cursor.value.CategoryId) {
-          this.editObject("tasks", { ...cursor.value, CategoryId: undefined });
+          if (id == cursor.value.CategoryId) {
+            this.editObject("tasks", {
+              ...cursor.value,
+              CategoryId: undefined,
+            });
+          }
+          //console.log(cursor);
+          cursor.continue();
         }
-        //console.log(cursor);
-        cursor.continue();
-      }
-    };
-
+      };
+    }
     addRequest.onerror = () => this.errorHandler(storeName, this.DELETE_OBJECT);
     window.dispatchEvent(new CustomEvent(DatabaseManagerEventName));
   }

@@ -24,13 +24,13 @@ export declare namespace AppState {
   }
 
   interface itemState {
-    id: number;
+    id: string;
     Name: string;
     Description?: string;
-    CategoryId?: number;
+    CategoryId?: string;
   }
   interface categoryState {
-    id: number;
+    id: string;
     Name: string;
     Description: string;
   }
